@@ -223,8 +223,8 @@ The trace I checked in Obsidian: `index` → [[My Career Plan]] → Sources link
 
 All runs used **gemma4:e2b Q4_K_M via Ollama 0.34.3, local, with the internet disconnected**, on the data above.
 Proof of offline: [transcript step 0](evidence/offline/20260927-180516/transcript.txt)
-(`ping: Network is unreachable`, `https://www.google.com unreachable`), and
-[screenshots](evidence/screenshots/offline-01-proof.png).
+(`ping: Network is unreachable`, `https://www.google.com unreachable`). Terminal screenshots from the same offline run:
+[proof of offline](evidence/screenshots/offline-01-proof.png) · [ask tests 2–3](evidence/screenshots/offline-02-ask-tests.png) · [chat: "make that shorter" + made-up claim](evidence/screenshots/offline-03-chat.png) · [end of run](evidence/screenshots/offline-99-end.png).
 
 | Test | Question | Result | Card |
 |---|---|---|---|
