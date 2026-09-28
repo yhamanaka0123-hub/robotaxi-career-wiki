@@ -1,0 +1,112 @@
+{
+  "mode": "ask",
+  "timestamp": "2026-09-27T18:11:19",
+  "question": "Does Moove sponsor H-1B visas for its employees?",
+  "model": {
+    "runtime": "Ollama",
+    "url": "http://localhost:11434",
+    "model": "gemma4:e2b",
+    "embed_model": "embeddinggemma",
+    "execution": "local",
+    "runtime_version": "0.34.3",
+    "quantization": "Q4_K_M",
+    "parameters": "5.1B",
+    "digest": "7fbdbf8f5e45"
+  },
+  "retrieval_method": "hybrid (BM25 + EmbeddingGemma, RRF), 3 queries",
+  "queries": [
+    "Does Moove sponsor H-1B visas for its employees?",
+    "Moove H-1B sponsorship policy",
+    "H-1B visa sponsorship for Moove employees"
+  ],
+  "settings": {
+    "top_k": 6,
+    "chunk_chars": 900,
+    "vector_weight": 2.0,
+    "query_expansion": true,
+    "temperature": 0.0,
+    "num_ctx": 8192,
+    "think": false
+  },
+  "stale_sources": [],
+  "retrieved": [
+    {
+      "cite": "S1",
+      "path": "raw/My Career Notes.md",
+      "section": "Recruiting plan",
+      "lines": "18-19",
+      "passage_id": "personal-career-notes#3",
+      "score": 0.0492,
+      "bm25_rank": 1,
+      "vector_rank": 1,
+      "text": "- I should recruit at other companies too, not only Moove, because I need an employer that will sponsor my H-1B.\n- Companies I am considering: AV companies, including Waymo and Zoox."
+    },
+    {
+      "cite": "S2",
+      "path": "raw/My Career Notes.md",
+      "section": "Current role",
+      "lines": "4-6",
+      "passage_id": "personal-career-notes#0",
+      "score": 0.0481,
+      "bm25_rank": 1,
+      "vector_rank": 3,
+      "text": "- I am a Business Development Intern at Moove.\n- Moove is a fleet operations partner for robotaxi companies.\n- My work covers international expansion strategy and go-to-market (GTM) strategy execution."
+    },
+    {
+      "cite": "S3",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Maintaining status > Dual intent",
+      "lines": "76-77",
+      "passage_id": "wiki-h1b#21",
+      "score": 0.0479,
+      "bm25_rank": 4,
+      "vector_rank": 2,
+      "text": "H-1B visas are considered \"dual intent\" because it is a temporary visa which gives visa holders the option to apply for permanent residency. Employers often support this process by sponsoring green card application for H-1B employees. Typically, visa holders will be working in the U.S. with the visa while they apply for permanent residency\nH-1B1 visas are not dual intent."
+    },
+    {
+      "cite": "S4",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Eligibility and application process > Employment",
+      "lines": "21-21",
+      "passage_id": "wiki-h1b#6",
+      "score": 0.0476,
+      "bm25_rank": 5,
+      "vector_rank": 2,
+      "text": "To maintain H-1B visa status, visa holders must maintain employment with their sponsoring employer. If employment ends, the individual must either leave the U.S., seek a change of status, or obtain a new H-1B sponsorship. In 2017, USCIS implemented a grace period of up to 60 days following employment termination, during which the individual may remain in the United States to seek new employment or file for a change of status."
+    },
+    {
+      "cite": "S5",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "History > Executive action history > The 2010 Neufeld Memo",
+      "lines": "183-183",
+      "passage_id": "wiki-h1b#45",
+      "score": 0.0466,
+      "bm25_rank": 3,
+      "vector_rank": 5,
+      "text": "Third-party placement firms and staffing agencies generally do not qualify for H-1B sponsorship. Senator John Cornyn helped negotiate a halt to the memo’s implementation following concerns from IT outsourcing firms."
+    },
+    {
+      "cite": "S6",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Introduction",
+      "lines": "5-6",
+      "passage_id": "wiki-h1b#1",
+      "score": 0.0464,
+      "bm25_rank": 6,
+      "vector_rank": 4,
+      "text": "(B) attainment of a bachelor's degree or higher degree in the specific specialty (or its equivalent) as a minimum for entry into the occupation in the United States.\nH-1B visa status holders typically have an initial three-year stay in the U.S. They are entitled to a maximum of six years of physical presence in H-1B status. After reaching certain milestones in the green card process, H-1B status can be extended beyond the six-year maximum.  The number of initial H-1B visas issued each fiscal year is capped at 65,000, with an additional 20,000 visas available for individuals who have earned a master's degree or higher from a U.S. institution, for a total of 85,000. Some employers are exempt from this cap.  Sponsorship by an employer is required for applicants."
+    }
+  ],
+  "answer": "INSUFFICIENT EVIDENCE\nThe provided passages do not state whether Moove sponsors H-1B visas for its employees.",
+  "citation_check": {
+    "status": "insufficient evidence (reported by model)",
+    "cited": [],
+    "invalid": [],
+    "uncited_sentences": [],
+    "numbers_not_in_cited_passages": [],
+    "insufficient": true
+  },
+  "timing_seconds": 1.9,
+  "prompt_tokens": 1074,
+  "output_tokens": 26
+}

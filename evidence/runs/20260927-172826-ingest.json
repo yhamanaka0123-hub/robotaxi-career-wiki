@@ -1,0 +1,31 @@
+{
+  "mode": "ingest",
+  "timestamp": "2026-09-27T17:28:26",
+  "target": "/home/yhamanaka/personal-wiki/vault/raw/Zoox - Wikipedia.md",
+  "model": {
+    "runtime": "Ollama",
+    "url": "http://localhost:11434",
+    "model": "gemma4:e2b",
+    "embed_model": "embeddinggemma",
+    "execution": "local",
+    "runtime_version": "0.34.3",
+    "quantization": "Q4_K_M",
+    "parameters": "5.1B",
+    "digest": "7fbdbf8f5e45"
+  },
+  "force": false,
+  "results": [
+    {
+      "source": "wiki-zoox",
+      "note": "wiki/Companies/Zoox.md",
+      "action": "kept (reviewed)"
+    }
+  ],
+  "index": {
+    "passages": 242,
+    "embed_model": "embeddinggemma",
+    "embeddings": "ok",
+    "chunk_chars": 900
+  },
+  "total_seconds": 44.0
+}

@@ -1,0 +1,36 @@
+{
+  "mode": "ingest",
+  "timestamp": "2026-09-27T18:07:11",
+  "target": "/mnt/c/Users/yhama/personal-wiki/vault/raw/Zoox - Wikipedia.md",
+  "model": {
+    "runtime": "Ollama",
+    "url": "http://localhost:11434",
+    "model": "gemma4:e2b",
+    "embed_model": "embeddinggemma",
+    "execution": "local",
+    "runtime_version": "0.34.3",
+    "quantization": "Q4_K_M",
+    "parameters": "5.1B",
+    "digest": "7fbdbf8f5e45"
+  },
+  "force": true,
+  "results": [
+    {
+      "source": "wiki-zoox",
+      "note": "wiki/Companies/Zoox.md",
+      "action": "updated",
+      "warnings": [],
+      "chars_sent": 2469,
+      "seconds": 63.4,
+      "prompt_tokens": 853,
+      "output_tokens": 561
+    }
+  ],
+  "index": {
+    "passages": 242,
+    "embed_model": "embeddinggemma",
+    "embeddings": "ok",
+    "chunk_chars": 900
+  },
+  "total_seconds": 102.7
+}

@@ -1,0 +1,396 @@
+
+
+==================== 0. Proof of offline + device ====================
+$ date; ping/curl to the internet; specs
+Sun Sep 27 18:05:16 PDT 2026
+--- internet check (expected to FAIL) ---
+ping: connect: Network is unreachable
+OK: ping 8.8.8.8 failed (offline)
+curl: (28) Resolving timed out after 5001 milliseconds
+OK: https://www.google.com unreachable (offline)
+
+Name                               Status
+----                               ------
+vEthernet (WSL (Hyper-V firewall)) Up    
+vEthernet (FSE HostVnic)           Up    
+
+
+--- device ---
+PRETTY_NAME="Ubuntu 26.04 LTS"
+6.18.33.2-microsoft-standard-WSL2
+CPU(s):                                  16
+Model name:                              AMD Ryzen 7 PRO 7840U w/ Radeon 780M Graphics
+               total        used        free      shared  buff/cache   available
+Mem:           7.1Gi       1.1Gi       5.8Gi       8.0Mi       348Mi       6.0Gi
+Host RAM (GB): 14.7
+Host free RAM (GB): 1.2
+C:\             475G  199G  276G  42% /mnt/c
+
+
+==================== 1. Help ====================
+$ ./wiki --help
+usage: wiki [-h] {chat,ask,search,ingest,status} ...
+
+Personal wiki CLI backed by a local Gemma model (gemma4:e2b via Ollama).
+
+modes:
+  chat    personal assistant "Navi": conversation memory, looks up notes only when needed
+  ask     standalone factual answer from retrieved passages, with citations
+  search  original matching passages and paths; no model answer is generated
+  ingest  read sources in vault/raw/, write linked notes in vault/wiki/, rebuild the index
+  status  show model, runtime, index, and vault state
+
+examples:
+  wiki ingest ./vault/raw
+  wiki search "H-1B annual cap"
+  wiki ask "Which company owns Zoox?" --mode local
+  wiki chat
+
+configuration (environment variables):
+  WIKI_OLLAMA_URL      local runtime URL        (default http://localhost:11434)
+  WIKI_MODEL           generation model         (default gemma4:e2b)
+  WIKI_EMBED_MODEL     embedding model          (default embeddinggemma)
+  WIKI_TOP_K           passages per question    (default 6)
+  WIKI_VECTOR_WEIGHT   embedding weight in fusion (default 2.0)
+  WIKI_QUERY_EXPANSION 1/0 extra search queries in ask (default 1)
+
+required inputs: sources.json (catalog), vault/raw/ (originals), instructions/*.md (prompts).
+Every run is saved under evidence/runs/.
+
+positional arguments:
+  {chat,ask,search,ingest,status}
+    ingest              build wiki notes and the search index from sources
+    search              show matching original passages (no generation)
+    ask                 standalone cited answer from your sources
+    chat                talk with Navi, your personal assistant
+    status              show model, runtime, and index status
+
+options:
+  -h, --help            show this help message and exit
+
+
+==================== 1b. Status ====================
+$ ./wiki status
+model:     gemma4:e2b (5.1B, Q4_K_M)
+embedding: embeddinggemma
+runtime:   Ollama 0.34.3 at http://localhost:11434 (execution: local)
+index:     242 passages from 6 sources, embeddings ok
+wiki:      6 notes in vault/wiki/
+           Career/My Career Plan.md
+           Companies/Waymo.md
+           Companies/Zoox.md
+           Industry/Robotaxi Industry.md
+           Visas/H-1B Visa.md
+           Visas/Optional Practical Training.md
+
+
+==================== 2. Ingest a local source (regenerate its note with local Gemma) ====================
+$ ./wiki ingest "./vault/raw/Zoox - Wikipedia.md" --force
+[ingest · local · gemma4:e2b, Q4_K_M · Ollama 0.34.3]
+→ raw/Zoox - Wikipedia.md: asking gemma4:e2b to draft 'Zoox' ...
+  updated wiki/Companies/Zoox.md (63.4s, 2469 chars sent, 853 prompt tokens)
+→ rebuilding retrieval index from raw sources ...
+  split raw/Robotaxi - Wikipedia.md: 34 passages
+  split raw/Waymo - Wikipedia.md: 56 passages
+  split raw/Zoox - Wikipedia.md: 15 passages
+  split raw/H-1B visa - Wikipedia.md: 94 passages
+  split raw/Optional Practical Training - Wikipedia.md: 39 passages
+  split raw/My Career Notes.md: 4 passages
+  wrote vault/index.md and vault/Source Catalog.md
+
+Done in 102.7s. Saved: evidence/runs/20260927-180711-ingest.md
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:43.19
+	Maximum resident set size (kbytes): 38972
+--- notes after ingest (expect 6, no duplicates) ---
+vault/wiki/Career/My Career Plan.md
+vault/wiki/Companies/Waymo.md
+vault/wiki/Companies/Zoox.md
+vault/wiki/Industry/Robotaxi Industry.md
+vault/wiki/Visas/H-1B Visa.md
+vault/wiki/Visas/Optional Practical Training.md
+6
+--- model memory while loaded ---
+embeddinggemma:latest: 0.68 GB loaded (BF16), context 2048
+gemma4:e2b: 6.87 GB loaded (Q4_K_M), context 8192
+
+Name       WorkingSet_GB
+----       -------------
+ollama              0.03
+ollama app          0.01
+
+
+
+
+==================== 3. Search (retrieval only, no generation) ====================
+$ ./wiki search "H-1B cap master's degree"
+[search · retrieval only, no model answer · hybrid (BM25 + EmbeddingGemma, RRF)]
+
+[S1] raw/H-1B visa - Wikipedia.md § Introduction (lines 5-6)  score 0.0492
+    (B) attainment of a bachelor's degree or higher degree in the specific specialty (or its equivalent) as a minimum for entry into the occupation in the United States.
+    H-1B visa status holders typically have an initial three-year stay in the U.S. They are entitled to a maximum of six years of physical presence in H-1B status. After reaching certain milestones in the green card process, H-1B status can be extended beyond the six-year maximum.  The number of initial H-1B visas issued each fiscal year is capped at 65,000, with an additional 20,000 visas available for individuals who have earned a master's degree or higher from a U.S. institution, for a total of 85,000. Some employers are exempt from this cap.  Sponsorship by an employer is required for applicants.
+
+[S2] raw/H-1B visa - Wikipedia.md § Annual cap (lines 104-111)  score 0.0476
+    The H-1B visa program is subject to an annual cap of 65,000 visas, with an additional 20,000 visas available for applicants holding advanced degrees from U.S. institutions. Certain employers are exempt from these caps, including:
+    institutions of higher education,
+    nonprofit and governmental research organizations,
+    cap-exemption employees (those who have already received H-1B visas),
+    applications to work in the Northern Mariana Islands and Guam, and
+    Chilean and Singaporean nationals.
+    Prospective H-1B workers seeking employment in the U.S. territories of the Northern Mariana Islands and Guam are exempt from the cap until December 31, 2029. If approved, visa holders may only work in the territory (NMI or Guam) for which they are approved.
+
+[S3] raw/H-1B visa - Wikipedia.md § History > Executive action history > STEM Optional Practical Training extension and cap-gap extension (lines 169-170)  score 0.0465
+    On April 2, 2008, Homeland Security Secretary Michael Chertoff announced a 17-month extension to Optional Practical Training for STEM students, as part of the H-1B Cap-Gap Regulations. This extension allows foreign STEM students to work in the U.S. for up to 29 months on a student visa, providing additional time to secure H-1B sponsorship.
+    To qualify for the standard 12-month OPT, a bachelor’s degree in any field is acceptable. However, the 17-month STEM extension requires a degree in an approved STEM major, as listed by USCIS. The cap-gap extension, introduced alongside this rule, allows STEM OPT workers with pending or approved H-1B petitions to remain in the U.S. while awaiting the start of their H-1B status.
+
+[S4] raw/H-1B visa - Wikipedia.md § History > Executive action history > Proposed increased filing fee (lines 251-251)  score 0.0457
+    On August 25, 2026, the Department of Homeland Security proposed a new rule to establish a $103,265 fee for all H-1B cap-subject petitions. The new fee will be required to be paid when the H-1B application is filed. All H-1B cap-subject petitions will be required to pay the new fee including those that are eligible for the advanced degree exemption and individuals who are either inside or outside the US at the time of filing. The new fee will be in addition to the fees that are already required. Employers that are exempt from the annual H-1B cap, such as universities, affiliated nonprofit organizations, and certain research organizations, would not be subject to the new fee. The proposed rule has a 30-day comment period before going into effect.
+
+[S5] raw/H-1B visa - Wikipedia.md § Eligibility and application process (lines 13-13)  score 0.0455
+    The H-1B visa is a non-immigrant visa in the United States that allows employers to hire foreign workers in specialty occupations, has an annual cap on the number of issued visas, and requires employers to submit paperwork that ensures compliance with various provisions of the law authorizing the visa.
+
+[S6] raw/H-1B visa - Wikipedia.md § History > The H-1B Visa Reform Act of 2004 (lines 142-143)  score 0.0451
+    The H-1B Visa Reform Act of 2004 was a part of the Consolidated Appropriations Act, 2005, which President George W. Bush signed on December 6, 2004. For employers with 26 or more employees, the retraining fee was increased from $1,000 to $1,500, and it was reduced to $750 for all other employers. A new $500 "anti-fraud fee" was to be paid by the employer with the visa application.
+    The H-1B quota returned to 65,000 per year and the law added 20,000 visas for applicants with master's degree or doctorate degree from a U.S. graduate school. Governmental entities became exempt from H-1B visa quotas. According to the law, H-1B visas that were revoked due to either fraud or willful misrepresentation would be added to the H-1B visa quota for the following fiscal year.
+
+Saved: evidence/runs/20260927-180714-search.md
+
+
+==================== 4. Ask test 1 ====================
+$ ./wiki ask "Which company owns Zoox, and how much did it pay to acquire it?" --mode local
+[ask · local · gemma4:e2b, Q4_K_M · Ollama 0.34.3]
+Q: Which company owns Zoox, and how much did it pay to acquire it?
+
+Amazon acquired Zoox as a wholly owned subsidiary in a merger agreement signed on June 26, 2020, for over $1.2 billion [S2].
+
+Sources:
+  [S1] raw/Zoox - Wikipedia.md § Progress and competition (lines 23-23)
+ *[S2] raw/Zoox - Wikipedia.md § History (lines 7-7)
+  [S3] raw/Zoox - Wikipedia.md § Introduction (lines 1-1)
+  [S4] raw/Zoox - Wikipedia.md § History (lines 6-6)
+  [S5] raw/Zoox - Wikipedia.md § Progress and competition (lines 31-31)
+  [S6] raw/Zoox - Wikipedia.md § Progress and competition (lines 24-24)
+
+Citation check: ok: every sentence cites a retrieved passage   (* = cited in answer)
+Saved: evidence/runs/20260927-180735-ask.md
+wall 20.97 s, max RSS of CLI 36956 KB
+
+
+==================== 5. Ask test 2 ====================
+$ ./wiki ask "If I finish a graduate degree at an American university, is there a separate H-1B quota I can apply under?" --mode local
+[ask · local · gemma4:e2b, Q4_K_M · Ollama 0.34.3]
+Q: If I finish a graduate degree at an American university, is there a separate H-1B quota I can apply under?
+
+The number of initial H-1B visas available each fiscal year is capped at 65,000, with an additional 20,000 visas available for individuals who have earned a master's degree or higher from a U.S. institution, for a total of 85,000 [S5]. This additional allocation is for individuals who have earned a master's degree or higher from a U.S. institution [S5].
+
+Sources:
+  [S1] raw/H-1B visa - Wikipedia.md § Eligibility and application process > Employment (lines 21-21)
+  [S2] raw/H-1B visa - Wikipedia.md § History > The Immigration Act of 1990 (lines 124-124)
+  [S3] raw/H-1B visa - Wikipedia.md § Eligibility and application process > Specialty occupation (lines 17-17)
+  [S4] raw/H-1B visa - Wikipedia.md § Criticism > Limitations for entrepreneurs and self-employed consultants (lines 355-355)
+ *[S5] raw/H-1B visa - Wikipedia.md § Introduction (lines 5-6)
+  [S6] raw/H-1B visa - Wikipedia.md § Maintaining status > Dependents of visa holders (lines 81-82)
+
+Citation check: ok: every sentence cites a retrieved passage   (* = cited in answer)
+Saved: evidence/runs/20260927-180759-ask.md
+wall 24.52 s
+
+
+==================== 6. Ask test 3 ====================
+$ ./wiki ask "After I graduate from my MBA, how long can I work in the US on OPT before I need an H-1B?" --mode local
+[ask · local · gemma4:e2b, Q4_K_M · Ollama 0.34.3]
+Q: After I graduate from my MBA, how long can I work in the US on OPT before I need an H-1B?
+
+The duration of OPT depends on the type of degree and extensions available. For most people, the Optional Practical Training program duration is a year [S2]. STEM students can potentially have a longer OPT period due to extensions; for STEM students, there was a 17-month extension for OPT as part of the H-1B Cap-Gap Regulations [S4]. Furthermore, certain F-1 students who receive STEM degrees and meet other requirements can apply for a 24-month extension of their post-completion OPT, resulting in a total of 36 months of OPT [S6].
+
+Sources:
+  [S1] raw/Optional Practical Training - Wikipedia.md § Support of the OPT program > Pathway to High-Skilled Immigration (lines 172-172)
+ *[S2] raw/Optional Practical Training - Wikipedia.md § OPT Statistics > Number of OPT Students by Country (lines 41-42)
+  [S3] raw/My Career Notes.md § Situation (lines 9-11)
+ *[S4] raw/H-1B visa - Wikipedia.md § History > Executive action history > STEM Optional Practical Training extension and cap-gap extension (lines 169-170)
+  [S5] raw/H-1B visa - Wikipedia.md § Introduction (lines 9-9)
+ *[S6] raw/Optional Practical Training - Wikipedia.md § Introduction (lines 4-4)
+
+Citation check: WARN: some claims lack matching citations   (* = cited in answer)
+  sentences without citation: 1
+Saved: evidence/runs/20260927-180828-ask.md
+wall 28.47 s
+
+
+==================== 7. Ask test 4 (unsupported) ====================
+$ ./wiki ask "Does Moove sponsor H-1B visas for its employees?" --mode local
+[ask · local · gemma4:e2b, Q4_K_M · Ollama 0.34.3]
+Q: Does Moove sponsor H-1B visas for its employees?
+
+INSUFFICIENT EVIDENCE
+The provided passages do not state whether Moove sponsors H-1B visas for its employees.
+
+Sources:
+  [S1] raw/My Career Notes.md § Recruiting plan (lines 18-19)
+  [S2] raw/H-1B visa - Wikipedia.md § Introduction (lines 5-6)
+  [S3] raw/H-1B visa - Wikipedia.md § Eligibility and application process > Employment (lines 21-21)
+  [S4] raw/H-1B visa - Wikipedia.md § Maintaining status > Dual intent (lines 76-77)
+  [S5] raw/My Career Notes.md § Current role (lines 4-6)
+  [S6] raw/H-1B visa - Wikipedia.md § Criticism > Limitations for entrepreneurs and self-employed consultants (lines 355-355)
+
+Citation check: insufficient evidence (reported by model)   (* = cited in answer)
+Saved: evidence/runs/20260927-180847-ask.md
+wall 19.54 s
+
+
+==================== 8. Chat mode checks ====================
+$ ./wiki chat  (scripted input)
+Navi · chat mode · gemma4:e2b (5.1B, Q4_K_M) via Ollama 0.34.3 · execution: local
+Hi! I'm Navi, your robotaxi-career assistant. Type /help for commands, /exit to quit.
+
+you › what can you help me with?
+
+Navi › Hey! I'm Navi, and I'm here to help you navigate the world of the Robotaxi and autonomous vehicle industry. Think of me as your sharp MBA classmate who's done the homework so you don't have to.
+
+I can help you with things like:
+
+*   **Brainstorming & Planning:** We can map out career paths, figure out networking strategies, or plan your recruiting approach.
+*   **Drafting Materials:** I can help you write networking messages, prepare interview talking points, or refine your resume.
+*   **Comparison & Analysis:** Need to compare Waymo vs. Zoox? I can help break down the landscape.
+*   **Information Retrieval:** I can pull specific facts from our shared knowledge base about the industry, companies, visas (like H-1B/OPT), and anything else you need.
+
+Just tell me what's on your mind! Where should we start?
+
+  (notes lookup: no (router) · 17.9s)
+
+you › what can we do?
+
+Navi › We can dive into anything related to your career goals in the Robotaxi/AV space!
+
+For example, we could focus on:
+
+*   **Industry Deep Dive:** Discussing the current state of the Robotaxi market, key players (Waymo, Zoox, etc.), and emerging technologies.
+*   **Career Strategy:** Planning your next steps, identifying target companies, or figuring out what skills you need to emphasize for specific roles.
+*   **Visa & Immigration:** Discussing the practicalities of the H-1B visa and OPT for this industry.
+*   **Networking:** Drafting outreach messages or planning how to connect with people in the field.
+*   **Interview Prep:** Running mock interviews and developing strong answers for behavioral or technical questions.
+
+What's the most pressing thing you're working on right now?
+
+  (notes lookup: no (router) · 13.3s)
+
+you › draft a short plan for my recruiting this fall, based on my notes
+
+Navi › Okay, let's draft a focused recruiting plan for this fall based on your notes. Here is a short, actionable plan:
+
+### Fall Recruiting Plan: AV/Robotaxi Focus
+
+**Phase 1: Target Identification & Prioritization (Now)**
+
+*   **Broaden the Net:** Don't limit yourself only to direct AV companies. Focus on companies that have a strong presence or potential in the Robotaxi ecosystem.
+*   **Key Targets:** Prioritize companies like **Waymo** and **Zoox** (as noted in [S1]), but also look for other players in the broader AV space.
+*   **Role Focus:** Target roles aligning with your interests: **Strategy, Business Development, Partnerships, and Strategy & Operations** [S3].
+
+**Phase 2: Leveraging Current Experience (Immediate Action)**
+
+*   **Leverage Moove:** Use your current role at Moove [S4] as a strong anchor. Highlight your experience in **international expansion strategy** and **go-to-market (GTM) strategy execution**—these are highly relevant skills for AV business development.
+*   **Connect Skills to Needs:** When reaching out, frame your Moove experience in the context of how you can help a company scale their robotaxi/AV operations.
+
+**Phase 3: Visa & Long-Term Strategy (Ongoing)**
+
+*   **Sponsorship Focus:** Remember that securing an employer willing to sponsor an H-1B visa is a critical factor [S1], especially given your timeline [S2].
+*   **Long-Term Vision:** Keep your ultimate goal in mind: staying within the AV/Robotaxi industry [S3].
+
+**Next Steps:**
+
+What do you want to work on next? We could draft some specific networking messages for Waymo or Zoox, or maybe brainstorm how to tailor your resume for these strategy roles.
+
+  Sources:
+    [S1] raw/My Career Notes.md § Recruiting plan (lines 18-19)
+    [S2] raw/My Career Notes.md § Situation (lines 9-11)
+    [S3] raw/My Career Notes.md § Career goal (lines 14-15)
+    [S4] raw/My Career Notes.md § Current role (lines 4-6)
+  (notes lookup: yes — query “draft a short plan for recruiting this fall based on my notes” (router) · 29.7s)
+
+you › make that shorter
+
+Navi › Got it. Here is the super-condensed version of the recruiting plan:
+
+### Fall Recruiting Plan (Condensed)
+
+*   **Target:** Focus on **Strategy, Partnerships, and Business Development** roles at AV/Robotaxi companies (e.g., Waymo, Zoox).
+*   **Anchor:** Use your **Moove** experience ([S4]) to highlight your skills in **GTM strategy** and **international expansion**.
+*   **Goal:** Position yourself as someone who can help companies scale their robotaxi/AV operations.
+*   **Visa Note:** Keep H-1B sponsorship in mind as a key factor [S1].
+
+What should we refine next?
+
+  (notes lookup: no (rule: edit of previous reply) · 15.0s)
+
+you › By the way, my manager told me Moove will definitely sponsor my H-1B.
+
+Navi › That is **fantastic news**! Having guaranteed sponsorship from Moove significantly de-risks that part of your plan.
+
+Since the sponsorship is secured, we can shift the focus from *securing* sponsorship to *maximizing* the job offer.
+
+Here is the updated strategic focus:
+
+1.  **Recruiting Priority:** You can now focus 100% on targeting the **best-fit Robotaxi/AV roles** rather than worrying about visa hurdles for the initial offer.
+2.  **Leverage the Offer:** When interviewing, you can be more confident in discussing long-term commitment and career trajectory, as the employer side is already aligned.
+3.  **Focus on Value:** Your job in the interview should be about proving how your Moove strategy experience directly translates into building or scaling an AV product.
+
+**What should we do now?**
+
+*   Draft a specific networking message for a potential recruiter at Waymo or Zoox?
+*   Develop talking points for an interview that emphasize your strategy background?
+*   Review your career notes to see what specific technical skills you need to emphasize?
+
+  Sources:
+    [S1] raw/H-1B visa - Wikipedia.md § Introduction (lines 5-6)
+    [S2] raw/H-1B visa - Wikipedia.md § Eligibility and application process > Employment (lines 21-21)
+    [S3] raw/H-1B visa - Wikipedia.md § Maintaining status > Dependents of visa holders (lines 81-82)
+    [S4] raw/H-1B visa - Wikipedia.md § History > Executive action history > 2015 H-1B dependent work authorization (lines 187-191)
+  (notes lookup: yes — query “H-1B sponsorship status” (router) · 37.5s)
+
+you › /ask Does Moove sponsor H-1B visas for its employees?
+
+INSUFFICIENT EVIDENCE
+The provided passages do not state whether Moove sponsors H-1B visas for its employees.
+
+Sources:
+  [S1] raw/My Career Notes.md § Recruiting plan (lines 18-19)
+  [S2] raw/My Career Notes.md § Current role (lines 4-6)
+  [S3] raw/H-1B visa - Wikipedia.md § Maintaining status > Dual intent (lines 76-77)
+  [S4] raw/H-1B visa - Wikipedia.md § Eligibility and application process > Employment (lines 21-21)
+  [S5] raw/H-1B visa - Wikipedia.md § History > Executive action history > The 2010 Neufeld Memo (lines 183-183)
+  [S6] raw/H-1B visa - Wikipedia.md § Introduction (lines 5-6)
+
+Citation check: insufficient evidence (reported by model)   (* = cited in answer)
+Saved: evidence/runs/20260927-181115-ask.md
+you › /exit
+Transcript saved: evidence/runs/20260927-180848-chat.md
+
+
+==================== 9. Ask is independent of chat ====================
+$ ./wiki ask "Does Moove sponsor H-1B visas for its employees?" --mode local
+[ask · local · gemma4:e2b, Q4_K_M · Ollama 0.34.3]
+Q: Does Moove sponsor H-1B visas for its employees?
+
+INSUFFICIENT EVIDENCE
+The provided passages do not state whether Moove sponsors H-1B visas for its employees.
+
+Sources:
+  [S1] raw/My Career Notes.md § Recruiting plan (lines 18-19)
+  [S2] raw/My Career Notes.md § Current role (lines 4-6)
+  [S3] raw/H-1B visa - Wikipedia.md § Maintaining status > Dual intent (lines 76-77)
+  [S4] raw/H-1B visa - Wikipedia.md § Eligibility and application process > Employment (lines 21-21)
+  [S5] raw/H-1B visa - Wikipedia.md § History > Executive action history > The 2010 Neufeld Memo (lines 183-183)
+  [S6] raw/H-1B visa - Wikipedia.md § Introduction (lines 5-6)
+
+Citation check: insufficient evidence (reported by model)   (* = cited in answer)
+Saved: evidence/runs/20260927-181119-ask.md
+
+
+==================== 10. Errors ====================
+$ ./wiki ingest ./does-not-exist ; WIKI_OLLAMA_URL=http://localhost:9 ./wiki ask test
+Missing file: Path not found: /mnt/c/Users/yhama/personal-wiki/does-not-exist
+[ingest · local · gemma4:e2b, Q4_K_M · Ollama 0.34.3]
+Local model unavailable: Cannot reach the local model runtime at http://localhost:9 (timed out). Start Ollama (the Ollama app on Windows, or `ollama serve`) and try again.
+[ask · local · gemma4:e2b · Ollama unreachable]
+Q: test
+
+Transcript saved to evidence/offline/20260927-180516/transcript.txt

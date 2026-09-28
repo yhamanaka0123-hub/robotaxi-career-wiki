@@ -1,0 +1,111 @@
+{
+  "mode": "ask",
+  "timestamp": "2026-09-27T17:29:37",
+  "question": "If I finish a graduate degree at an American university, is there a separate H-1B quota I can apply under?",
+  "model": {
+    "runtime": "Ollama",
+    "url": "http://localhost:11434",
+    "model": "gemma4:e2b",
+    "embed_model": "embeddinggemma",
+    "execution": "local",
+    "runtime_version": "0.34.3",
+    "quantization": "Q4_K_M",
+    "parameters": "5.1B",
+    "digest": "7fbdbf8f5e45"
+  },
+  "retrieval_method": "hybrid (BM25 + EmbeddingGemma, RRF), 3 queries",
+  "queries": [
+    "If I finish a graduate degree at an American university, is there a separate H-1B quota I can apply under?",
+    "H-1B visa quota",
+    "post-graduate employment visa eligibility"
+  ],
+  "settings": {
+    "top_k": 6,
+    "chunk_chars": 900,
+    "vector_weight": 2.0,
+    "query_expansion": true,
+    "temperature": 0.2,
+    "num_ctx": 8192
+  },
+  "stale_sources": [],
+  "retrieved": [
+    {
+      "cite": "S1",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Eligibility and application process > Employment",
+      "lines": "21-21",
+      "passage_id": "wiki-h1b#6",
+      "score": 0.0472,
+      "bm25_rank": 1,
+      "vector_rank": 5,
+      "text": "To maintain H-1B visa status, visa holders must maintain employment with their sponsoring employer. If employment ends, the individual must either leave the U.S., seek a change of status, or obtain a new H-1B sponsorship. In 2017, USCIS implemented a grace period of up to 60 days following employment termination, during which the individual may remain in the United States to seek new employment or file for a change of status."
+    },
+    {
+      "cite": "S2",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "History > The Immigration Act of 1990",
+      "lines": "124-124",
+      "passage_id": "wiki-h1b#31",
+      "score": 0.0469,
+      "bm25_rank": 4,
+      "vector_rank": 4,
+      "text": "President George H. W. Bush signed the Immigration Act of 1990 into law by on November 20, 1990. The H-1 visa was split into the H-1A visa for nurses, and the H-1B visa for workers in specialty occupations. The Immigration Act defined a specialty occupation as \"an occupation that requires theoretical and practical application of a body of highly specialized knowledge, and attainment of a bachelor's or higher degree in the specific specialty (or its equivalent) as a minimum for entry into the occupation in the United States.\" To qualify, a visa applicant needed any applicable state license for the particular occupation, and either an educational degree related to the occupation or an equivalent amount of professional experience. For the first time, a quota of 65,000 H-1B visas available each fiscal year was established. Employers were required by law to pay such employees at least the prevailing wage for the position, and to make certain attestations by way of a Labor Condition Application."
+    },
+    {
+      "cite": "S3",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Eligibility and application process > Specialty occupation",
+      "lines": "17-17",
+      "passage_id": "wiki-h1b#5",
+      "score": 0.0457,
+      "bm25_rank": 7,
+      "vector_rank": 5,
+      "text": "H-1B visas, as defined by United States Code, are those jobs that require a \"theoretical and practical application of a body of highly specialized knowledge\" and a bachelor's degree or higher or the equivalent experience. In order to determine which jobs qualify under the law, the USCIS works with the Department of Labor and its Standard Occupational Classification database to determine a list of specific occupations."
+    },
+    {
+      "cite": "S4",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Criticism > Limitations for entrepreneurs and self-employed consultants",
+      "lines": "355-355",
+      "passage_id": "wiki-h1b#90",
+      "score": 0.0453,
+      "bm25_rank": 11,
+      "vector_rank": 4,
+      "text": "Entrepreneurs do not qualify for the H-1B visa. The United States immigration system's EB-5 visa program does permit foreign entrepreneurs to apply for a green card if they make a sufficient investment in a commercial enterprise and intend to create 10 or more jobs in the United States. In 2014, the University of Massachusetts began a program allowing entrepreneurs to found U.S. companies while fulfilling visa requirements by teaching and mentoring on campus, with the university as sponsoring employer. Self-employed consultants have no visa that allows them to enter the country and perform work independently for unspecified, extended periods. A B-1 visa would permit temporary travel to the U.S. to consult for specific periods. Consulting companies have been formed for the sole purpose of sponsoring employees on H-1B visas to allow them to perform work for clients, with the company sharing the resulting profit."
+    },
+    {
+      "cite": "S5",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Introduction",
+      "lines": "5-6",
+      "passage_id": "wiki-h1b#1",
+      "score": 0.0453,
+      "bm25_rank": 20,
+      "vector_rank": 1,
+      "text": "(B) attainment of a bachelor's degree or higher degree in the specific specialty (or its equivalent) as a minimum for entry into the occupation in the United States.\nH-1B visa status holders typically have an initial three-year stay in the U.S. They are entitled to a maximum of six years of physical presence in H-1B status. After reaching certain milestones in the green card process, H-1B status can be extended beyond the six-year maximum.  The number of initial H-1B visas issued each fiscal year is capped at 65,000, with an additional 20,000 visas available for individuals who have earned a master's degree or higher from a U.S. institution, for a total of 85,000. Some employers are exempt from this cap.  Sponsorship by an employer is required for applicants."
+    },
+    {
+      "cite": "S6",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Maintaining status > Dependents of visa holders",
+      "lines": "81-82",
+      "passage_id": "wiki-h1b#22",
+      "score": 0.0453,
+      "bm25_rank": 3,
+      "vector_rank": 8,
+      "text": "H-1B visa holders can bring immediate family members, such as their spouse and children under 21, to the United States as dependents under the H-4 visa category.\nAn H-4 visa holder may remain in the U.S. as long as the H-1B visa holder retains legal status. An H-4 visa holder is allowed to attend school, apply for a driver's license, and open a bank account in the U.S."
+    }
+  ],
+  "answer": "INSUFFICIENT EVIDENCE\nThe provided passages discuss the requirements and history of the H-1B visa, including quotas and educational requirements, but they do not address whether finishing a graduate degree at an American university grants a separate H-1B quota.",
+  "citation_check": {
+    "status": "insufficient evidence (reported by model)",
+    "cited": [],
+    "invalid": [],
+    "uncited_sentences": [],
+    "numbers_not_in_cited_passages": [],
+    "insufficient": true
+  },
+  "timing_seconds": 18.7,
+  "prompt_tokens": 1330,
+  "output_tokens": 52
+}

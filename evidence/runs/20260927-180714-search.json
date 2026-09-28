@@ -1,0 +1,76 @@
+{
+  "mode": "search",
+  "timestamp": "2026-09-27T18:07:14",
+  "query": "H-1B cap master's degree",
+  "retrieval_method": "hybrid (BM25 + EmbeddingGemma, RRF)",
+  "stale_sources": [],
+  "results": [
+    {
+      "cite": "S1",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Introduction",
+      "lines": "5-6",
+      "passage_id": "wiki-h1b#1",
+      "score": 0.0492,
+      "bm25_rank": 1,
+      "vector_rank": 1,
+      "text": "(B) attainment of a bachelor's degree or higher degree in the specific specialty (or its equivalent) as a minimum for entry into the occupation in the United States.\nH-1B visa status holders typically have an initial three-year stay in the U.S. They are entitled to a maximum of six years of physical presence in H-1B status. After reaching certain milestones in the green card process, H-1B status can be extended beyond the six-year maximum.  The number of initial H-1B visas issued each fiscal year is capped at 65,000, with an additional 20,000 visas available for individuals who have earned a master's degree or higher from a U.S. institution, for a total of 85,000. Some employers are exempt from this cap.  Sponsorship by an employer is required for applicants."
+    },
+    {
+      "cite": "S2",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Annual cap",
+      "lines": "104-111",
+      "passage_id": "wiki-h1b#28",
+      "score": 0.0476,
+      "bm25_rank": 5,
+      "vector_rank": 2,
+      "text": "The H-1B visa program is subject to an annual cap of 65,000 visas, with an additional 20,000 visas available for applicants holding advanced degrees from U.S. institutions. Certain employers are exempt from these caps, including:\ninstitutions of higher education,\nnonprofit and governmental research organizations,\ncap-exemption employees (those who have already received H-1B visas),\napplications to work in the Northern Mariana Islands and Guam, and\nChilean and Singaporean nationals.\nProspective H-1B workers seeking employment in the U.S. territories of the Northern Mariana Islands and Guam are exempt from the cap until December 31, 2029. If approved, visa holders may only work in the territory (NMI or Guam) for which they are approved."
+    },
+    {
+      "cite": "S3",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "History > Executive action history > STEM Optional Practical Training extension and cap-gap extension",
+      "lines": "169-170",
+      "passage_id": "wiki-h1b#43",
+      "score": 0.0465,
+      "bm25_rank": 8,
+      "vector_rank": 3,
+      "text": "On April 2, 2008, Homeland Security Secretary Michael Chertoff announced a 17-month extension to Optional Practical Training for STEM students, as part of the H-1B Cap-Gap Regulations. This extension allows foreign STEM students to work in the U.S. for up to 29 months on a student visa, providing additional time to secure H-1B sponsorship.\nTo qualify for the standard 12-month OPT, a bachelor’s degree in any field is acceptable. However, the 17-month STEM extension requires a degree in an approved STEM major, as listed by USCIS. The cap-gap extension, introduced alongside this rule, allows STEM OPT workers with pending or approved H-1B petitions to remain in the U.S. while awaiting the start of their H-1B status."
+    },
+    {
+      "cite": "S4",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "History > Executive action history > Proposed increased filing fee",
+      "lines": "251-251",
+      "passage_id": "wiki-h1b#62",
+      "score": 0.0457,
+      "bm25_rank": 7,
+      "vector_rank": 5,
+      "text": "On August 25, 2026, the Department of Homeland Security proposed a new rule to establish a $103,265 fee for all H-1B cap-subject petitions. The new fee will be required to be paid when the H-1B application is filed. All H-1B cap-subject petitions will be required to pay the new fee including those that are eligible for the advanced degree exemption and individuals who are either inside or outside the US at the time of filing. The new fee will be in addition to the fees that are already required. Employers that are exempt from the annual H-1B cap, such as universities, affiliated nonprofit organizations, and certain research organizations, would not be subject to the new fee. The proposed rule has a 30-day comment period before going into effect."
+    },
+    {
+      "cite": "S5",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "Eligibility and application process",
+      "lines": "13-13",
+      "passage_id": "wiki-h1b#4",
+      "score": 0.0455,
+      "bm25_rank": 10,
+      "vector_rank": 4,
+      "text": "The H-1B visa is a non-immigrant visa in the United States that allows employers to hire foreign workers in specialty occupations, has an annual cap on the number of issued visas, and requires employers to submit paperwork that ensures compliance with various provisions of the law authorizing the visa."
+    },
+    {
+      "cite": "S6",
+      "path": "raw/H-1B visa - Wikipedia.md",
+      "section": "History > The H-1B Visa Reform Act of 2004",
+      "lines": "142-143",
+      "passage_id": "wiki-h1b#36",
+      "score": 0.0451,
+      "bm25_rank": 2,
+      "vector_rank": 9,
+      "text": "The H-1B Visa Reform Act of 2004 was a part of the Consolidated Appropriations Act, 2005, which President George W. Bush signed on December 6, 2004. For employers with 26 or more employees, the retraining fee was increased from $1,000 to $1,500, and it was reduced to $750 for all other employers. A new $500 \"anti-fraud fee\" was to be paid by the employer with the visa application.\nThe H-1B quota returned to 65,000 per year and the law added 20,000 visas for applicants with master's degree or doctorate degree from a U.S. graduate school. Governmental entities became exempt from H-1B visa quotas. According to the law, H-1B visas that were revoked due to either fraud or willful misrepresentation would be added to the H-1B visa quota for the following fiscal year."
+    }
+  ],
+  "generated_answer": null
+}
