@@ -10,7 +10,7 @@ talks to a **local Gemma model with no internet**.
 
 **Quick links:**
 [CLI code](wiki_cli/) · [Wiki vault](vault/) · [index.md](vault/index.md) · [Source Catalog](vault/Source%20Catalog.md) ·
-[Four ask-mode evidence cards](#evidence) · [Mode checks](evidence/cards/Mode%20Checks.md) ·
+[Four ask-mode evidence cards](#5-evidence) · [Mode checks](evidence/cards/Mode%20Checks.md) ·
 [Offline transcript](evidence/offline/20260927-180516/transcript.txt) · [Screenshots](evidence/screenshots/)
 
 ---
@@ -61,7 +61,7 @@ in networking or interviews.
 | Official source | [Gemma docs](https://ai.google.dev/gemma/docs/core); weights from the Ollama library (`ollama pull gemma4:e2b`, `ollama pull embeddinggemma`) |
 
 **Why E2B:** this is a CPU-only laptop with 14.7 GB RAM that is also running a browser and other apps.
-E2B is the smallest Gemma 4 model, and it answered all four tests (see evidence) at 15–25 s per answer.
+E2B is the smallest Gemma 4 model. It passed Tests 1, 2 and 4 and partly passed Test 3 (see evidence), at 15–25 s per answer.
 E4B needs about 1.6 GB more just to load (4.5 vs 2.9 GB in the Gemma docs), and I had only 0.9–1.2 GB free. I also expect it to be slower on CPU. I did not measure E4B.
 26B A4B needs more than 14 GB just to load. Note that Ollama's `gemma4:e2b` is bigger than the "~2.9 GB at
 Q4_0" figure in the Gemma docs: the Ollama build is Q4_K_M and includes the vision and audio encoders.
@@ -88,7 +88,7 @@ ollama pull embeddinggemma
 # 2. If the CLI runs in WSL and Ollama on Windows: let WSL reach Windows localhost
 #    C:\Users\<you>\.wslconfig  ->  [wsl2]  networkingMode=mirrored   then: wsl --shutdown
 # 3. Get the project (Python 3.10+ only, no packages)
-git clone <this repo> personal-wiki && cd personal-wiki
+git clone https://github.com/yhamanaka0123-hub/robotaxi-career-wiki personal-wiki && cd personal-wiki
 ./wiki status          # checks runtime and model
 # 4. Build the search index (.index/ is not committed). Reviewed notes are kept, so this
 #    only re-embeds the 242 raw passages (~45 s); Gemma is not called.
@@ -229,10 +229,13 @@ Traces checked in Obsidian:
    ([obsidian-trace-related-note.png](evidence/screenshots/obsidian-trace-related-note.png)) → fact source link →
    `raw/Optional Practical Training - Wikipedia` ([obsidian-trace-raw-source.png](evidence/screenshots/obsidian-trace-raw-source.png)).
    The raw text on screen shows the 115,651 "non-STEM" sentence that I first wrongly "corrected" (see review log).
+   The note screenshot was taken before I reverted that correction, so it still shows "new OPT authorizations";
+   the current note says "new non-STEM OPT authorizations", matching raw line 1.
 
 ## 5. Evidence
 
-All runs used **gemma4:e2b Q4_K_M via Ollama 0.34.3, local, with the internet disconnected**, on the data above.
+The four ask tests and Mode Checks §1–4 ran on **gemma4:e2b Q4_K_M via Ollama 0.34.3, local, with the internet disconnected**, on the data above.
+Mode Checks §5, the live chat I typed by hand, used the same local model but with Wi-Fi on. Development runs in `evidence/runs/` were also made online.
 Proof of offline: [transcript step 0](evidence/offline/20260927-180516/transcript.txt)
 (`ping: Network is unreachable`, `https://www.google.com unreachable`). Terminal screenshots from the same offline run:
 [proof of offline](evidence/screenshots/offline-01-proof.png) ·
@@ -272,8 +275,10 @@ suggested dropping the sponsorship concern. My own notes say the opposite: I sho
   in chat. A 2B-scale model follows the latest message strongly. The retrieved passages did not contradict the
   claim directly, so nothing pushed back.
 - **Proposed improvement:** add a rule to `persona.md`: "Treat new facts the user states in chat as unverified;
-  say they are not in the wiki yet and offer `/save`." Also have the router pull `My Career Notes` whenever a
-  message concerns the user's own situation, so the reply can point out the conflict. Then rerun Mode Check §4.
+  say they are not in the wiki yet and offer `/save`." Part of the fix already exists: after the live chat
+  check (Mode Checks §5), `chat.py` now adds `My Career Notes` passages to any first-person request. With the
+  notes in the prompt, Navi could point out the conflict. The persona rule is not implemented yet, and I have
+  not re-run Mode Check §4 since the chat change.
 
 **A second limitation: outdated evidence and single-source reasoning (Test 3).** The H-1B article still
 describes the 2008 17-month STEM extension, which conflicts with the OPT article's 2016 24-month rule. E2B
