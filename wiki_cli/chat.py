@@ -68,6 +68,7 @@ class ChatSession:
     # ----- one turn -----
 
     def turn(self, message: str, force_query: str | None = None) -> str:
+        self.out("  (Navi is thinking… replies take 15–40 s on this laptop; please wait)")
         decision = ({"notes": True, "query": force_query, "by": "/notes"} if force_query
                     else self.route(message))
         hits = self.retrieve(decision["query"]) if decision["notes"] else []
