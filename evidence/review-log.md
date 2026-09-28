@@ -17,7 +17,7 @@ was set to `reviewed: true`, so a later `wiki ingest` keeps the reviewed text un
 
 | Note | Generated text | Source says | Correction |
 |---|---|---|---|
-| Optional Practical Training | "In 2021, there were 115,651 new **non-STEM** OPT authorizations" | line 29: "In 2021, there were 115,651 new OPT authorizations" | Removed the invented "non-STEM" |
+| Optional Practical Training | "In 2021, there were 115,651 new **non-STEM** OPT authorizations" | line 29: "In 2021, there were 115,651 new OPT authorizations" | ~~Removed the invented "non-STEM"~~ **Reverted — this was my review error, see below** |
 | Optional Practical Training | Listed only the 2008 **17-month** STEM extension (outdated) | line 4: 2016 rule allows a **24-month** extension, "a total of 36 months of OPT"; replaces the 17-month extension | Added the 24-month / 36-month fact |
 | My Career Plan | Summary said I work on strategy "for robotaxi companies" (not stated) | lines 4–6: BD intern at Moove; Moove is a fleet operations partner for robotaxi companies; work covers international expansion and GTM execution | Reworded to match the source |
 | My Career Plan | Recruiting fact dropped the reason | line 18: "…because I need an employer that will sponsor my H-1B" | Restored the reason |
@@ -30,6 +30,14 @@ reviewed version: wording changes only, all facts identical. One correction:
 | Note | Generated text | Source says | Correction |
 |---|---|---|---|
 | Zoox | Link to [[Waymo]]: "similar to the work done by Waymo" (model's inference) | "This launch directly accelerates Zoox's competition against Waymo" | Reason now states the competition, as in the source (line 31: the Nov 2025 San Francisco launch). My first fix wrongly said "Las Vegas"; caught by re-checking line 31 and corrected. |
+
+## Correction of my own review (found while taking Obsidian screenshots)
+
+I first marked "non-STEM" as invented by Gemma because I only checked line 29 of the OPT article.
+Line 1 (Introduction, the section Gemma cited) says: "In 2021, there were 115,651 new **non-STEM** OPT
+authorizations, a 105% increase from a decade prior." Gemma copied it correctly, so I restored the original
+wording. The raw article is inconsistent with itself (line 1 says "non-STEM", line 29 does not).
+Lesson: check every occurrence of a number in the source, not just the first one I find.
 
 ## Checked and correct (no change)
 - Waymo: 10 US metro areas, 3,871 robotaxis, 500,000 paid rides/week, 200 million miles, $11B by 2024, $16B at $126B valuation (lines 1, 3); co-CEOs since April 2021 (line 45).

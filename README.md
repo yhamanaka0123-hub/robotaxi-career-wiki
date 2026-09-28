@@ -203,8 +203,10 @@ in chat cannot become evidence for ask (tested: [Mode Checks §4](evidence/cards
   Zoox (still 6 notes).
 - **Link check:** every `[[wikilink]]` in the vault resolves to exactly one file; no duplicate note names; every note's first heading equals its filename (checked by script).
 - **Review:** each generated note was compared against the raw text. Corrections were made in the wiki, never
-  in `raw/`. Examples: Gemma invented "non-STEM" in an OPT statistic, and it left out the current 24-month STEM
-  rule. See [evidence/review-log.md](evidence/review-log.md).
+  in `raw/`. Examples: Gemma left out the current 24-month STEM OPT rule, wrote a summary claim the notes
+  did not make, and explained a Zoox→Waymo link with its own guess instead of the source. My own review also
+  made a mistake: I wrongly "corrected" a statistic that Gemma had copied correctly, then reverted it after
+  re-checking the source. See [evidence/review-log.md](evidence/review-log.md).
 
 ### Obsidian
 
@@ -220,8 +222,12 @@ Note: I first tried to open it through `\\wsl.localhost\Ubuntu\…`. Obsidian ca
 | [obsidian-graph.png](evidence/screenshots/obsidian-graph.png) | Graph view, **filter `path:wiki/`, Attachments off**: 6 readable labels; My Career Plan links to all topics; Waymo–Zoox–Robotaxi Industry; H-1B Visa–OPT |
 | [obsidian-graph-all.png](evidence/screenshots/obsidian-graph-all.png) | Unfiltered: notes, index, Source Catalog, and raw originals |
 
-The trace I checked in Obsidian: `index` → [[My Career Plan]] → Sources link → `raw/My Career Notes`
-(screenshots above). The same kind of link goes from every note to its raw original.
+Traces checked in Obsidian:
+1. `index` → [[My Career Plan]] → Sources link → `raw/My Career Notes` (screenshots above).
+2. Through a related note: [[My Career Plan]] → Related notes → [[Optional Practical Training]]
+   ([obsidian-trace-related-note.png](evidence/screenshots/obsidian-trace-related-note.png)) → fact source link →
+   `raw/Optional Practical Training - Wikipedia` ([obsidian-trace-raw-source.png](evidence/screenshots/obsidian-trace-raw-source.png)).
+   The raw text on screen shows the 115,651 "non-STEM" sentence that I first wrongly "corrected" (see review log).
 
 ## 5. Evidence
 

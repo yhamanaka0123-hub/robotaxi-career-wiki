@@ -17,7 +17,7 @@ Optional Practical Training (OPT) allows F-1 students to work for one year to ga
 ## Key facts
 
 - In 2022, there were 171,635 OPT employment authorizations. — [[raw/Optional Practical Training - Wikipedia|Optional Practical Training - Wikipedia]] § Introduction
-- In 2021, there were 115,651 new OPT authorizations, a 105% increase from a decade prior. — [[raw/Optional Practical Training - Wikipedia|Optional Practical Training - Wikipedia]] § Introduction
+- In 2021, there were 115,651 new non-STEM OPT authorizations, a 105% increase from a decade prior. — [[raw/Optional Practical Training - Wikipedia|Optional Practical Training - Wikipedia]] § Introduction
 - During the 2021-2022 school year, India had 68,188 OPT students and China had 51,199 OPT students. — [[raw/Optional Practical Training - Wikipedia|Optional Practical Training - Wikipedia]] § Introduction
 - There were 441,400 OPT approvals from India and 313,500 from China between 2004-2016. — [[raw/Optional Practical Training - Wikipedia|Optional Practical Training - Wikipedia]] § OPT Statistics > OPT Demographic Statistics > Global Geographic Statistics
 - The University of Southern California was the largest OPT participant between 2003 and 2017, with 30,720 approvals. — [[raw/Optional Practical Training - Wikipedia|Optional Practical Training - Wikipedia]] § OPT Statistics > OPT Demographic Statistics > Education Statistics
