@@ -89,7 +89,10 @@ ollama pull embeddinggemma
 #    C:\Users\<you>\.wslconfig  ->  [wsl2]  networkingMode=mirrored   then: wsl --shutdown
 # 3. Get the project (Python 3.10+ only, no packages)
 git clone <this repo> personal-wiki && cd personal-wiki
-./wiki status          # checks runtime, model, index
+./wiki status          # checks runtime and model
+# 4. Build the search index (.index/ is not committed). Reviewed notes are kept, so this
+#    only re-embeds the 242 raw passages (~45 s); Gemma is not called.
+./wiki ingest ./vault/raw
 ```
 
 Before going offline, `./wiki status` must show the model, quantization, and `embeddings ok`.
@@ -198,6 +201,7 @@ in chat cannot become evidence for ask (tested: [Mode Checks §4](evidence/cards
   kept as they are unless you pass `--force`. Checked three ways: a full re-ingest (6 notes "updated"), a
   single re-ingest of a reviewed note ("kept", identical checksums), and an offline `--force` re-ingest of
   Zoox (still 6 notes).
+- **Link check:** every `[[wikilink]]` in the vault resolves to exactly one file; no duplicate note names; every note's first heading equals its filename (checked by script).
 - **Review:** each generated note was compared against the raw text. Corrections were made in the wiki, never
   in `raw/`. Examples: Gemma invented "non-STEM" in an OPT statistic, and it left out the current 24-month STEM
   rule. See [evidence/review-log.md](evidence/review-log.md).

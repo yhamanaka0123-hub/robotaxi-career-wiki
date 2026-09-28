@@ -13,7 +13,7 @@ search record: [20260927-180714-search.md](../runs/20260927-180714-search.md)
 | `what can you help me with?` | no (router) | Introduced itself as Navi; listed brainstorming/planning, drafting, comparing Waymo vs Zoox, and pulling facts from the notes; asked where to start. No citations, no refusal. | ✅ |
 | `what can we do?` | no (router) | Offered concrete starting points (industry deep dive, career strategy, H-1B/OPT, networking, interview prep). No lookup, no "insufficient evidence". | ✅ |
 
-Minor inaccuracy: in one reply Navi said it can help "refine your resume", but it cannot read a resume unless the user pastes it.
+Minor issues: Navi said it can help "refine your resume", but it cannot read a resume unless the user pastes it. Its recruiting plan gave its own ideas (e.g. "Broaden the Net") without the "Suggestion:" label that `persona.md` asks for.
 
 ## 2. Chat: draft, then "make that shorter"
 
