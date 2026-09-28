@@ -256,6 +256,10 @@ Proof of offline: [transcript step 0](evidence/offline/20260927-180516/transcrip
   [transcript](evidence/offline/20260927-180516/transcript.txt). It covers help, status, ingest, search, the
   four asks, chat, ask after chat, and error messages.
 - Test expectations are in [`tests/questions.md`](tests/questions.md), outside the searchable vault.
+- **Code version:** the offline run used the code at commit `9b79efc`. The only code file changed since then is
+  `wiki_cli/chat.py`: it now shows a "Navi is thinking…" message, and personal notes are added for
+  first-person requests (Mode Checks §5). ask, search, ingest, retrieval and all instruction files are unchanged
+  since the offline run.
 
 ## 6. Reflection
 
