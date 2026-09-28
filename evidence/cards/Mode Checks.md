@@ -50,3 +50,20 @@ The chat claim never reached ask, and it was not written to `vault/` (chat histo
 advised dropping the sponsorship concern, even though the notes say the opposite ("I should recruit at other companies too…
 because I need an employer that will sponsor my H-1B"). The router also ran an unnecessary lookup and displayed four unrelated
 H-1B passages that the reply did not use. See the README reflection for the proposed fix.
+
+## 5. Live chat by the user (typed interactively, online, local model)
+
+Screenshot: [chat-live-user.png](../screenshots/chat-live-user.png). The user typed both messages by hand.
+
+| Input | Lookup? | Result | Pass? |
+|---|---|---|---|
+| `Draft a short networking message to someone on the Zoox strategy team, based on my background` | yes (router) — but **all 4 passages were from the Zoox article** | Navi said "I don't have your specific background details" and wrote a generic message. Labeled its draft "Suggestion". | ❌ retrieval |
+| `make that shorter` | no (rule: edit of previous reply), 7.1 s | Shortened the previous draft using the conversation. | ✅ |
+
+**Failure and fix.** The router's query ("draft networking message to Zoox strategy team based on background")
+was dominated by "Zoox", so the career notes never ranked in the top 4. Fix in `wiki_cli/chat.py`: when a
+message refers to the user ("my", "me", "I") and no personal passage was retrieved, the harness adds the two
+best `My Career Notes` passages (`ABOUT_ME`, `PERSONAL_SOURCE`). Re-run of the same message after the fix
+(piped input): sources were `[S1] My Career Notes § Current role`, `[S2] § Career goal`, `[S3]`/`[S4]` Zoox.
+The draft now says "As a Business Development Intern at Moove, where I focus on international expansion and
+go-to-market strategy…". Remaining weakness: the draft used these facts without `[S#]` markers.

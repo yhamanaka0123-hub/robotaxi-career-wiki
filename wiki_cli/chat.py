@@ -13,6 +13,10 @@ from . import ask, config, evidence, llm, prompts
 from .retrieval import Index
 
 CHAT_TOP_K = 4
+# Messages about the user themself ("based on my background") must also search the personal notes;
+# otherwise a company name in the request pulls only that company's passages.
+ABOUT_ME = re.compile(r"\b(my|me|mine|myself)\b|\bI\b|私|自分", re.I)
+PERSONAL_SOURCE = "personal-career-notes"
 # Requests to edit the previous reply never need the wiki; decided in code, before asking the model.
 EDIT_REQUEST = re.compile(
     r"^(make (it|that|this)|shorten|shorter|longer|rewrite|rephrase|simplify|translate|summari[sz]e (it|that)|"
@@ -60,9 +64,13 @@ class ChatSession:
         except json.JSONDecodeError:
             return {"notes": False, "query": "", "by": "router (unreadable reply)"}
 
-    def retrieve(self, query: str) -> list[dict]:
+    def retrieve(self, query: str, message: str = "") -> list[dict]:
         self.index = self.index or Index()
         hits, _ = self.index.search(query, k=CHAT_TOP_K)
+        if ABOUT_ME.search(message) and not any(h["passage"].source_id == PERSONAL_SOURCE for h in hits):
+            mine, _ = self.index.search(f"my background current role situation goals {query}", k=40)
+            mine = [h for h in mine if h["passage"].source_id == PERSONAL_SOURCE][:2]
+            hits = mine + hits[: CHAT_TOP_K - len(mine)]
         return hits
 
     # ----- one turn -----
@@ -71,7 +79,7 @@ class ChatSession:
         self.out("  (Navi is thinking… replies take 15–40 s on this laptop; please wait)")
         decision = ({"notes": True, "query": force_query, "by": "/notes"} if force_query
                     else self.route(message))
-        hits = self.retrieve(decision["query"]) if decision["notes"] else []
+        hits = self.retrieve(decision["query"], message) if decision["notes"] else []
 
         user_content = message
         if hits:

@@ -247,7 +247,7 @@ Proof of offline: [transcript step 0](evidence/offline/20260927-180516/transcrip
 | 3 · two sources | After I graduate from my MBA, how long can I work on OPT before I need an H-1B? | ⚠️ Partial: 12 months, then 24-month STEM extension → 36 months [S2][S6], but it also lists the outdated 17-month rule without flagging it and does not apply my notes | [Test 3](evidence/cards/Test%203%20-%20OPT%20Before%20H-1B.md) |
 | 4 · unsupported | Does Moove sponsor H-1B visas for its employees? | ✅ `INSUFFICIENT EVIDENCE` | [Test 4](evidence/cards/Test%204%20-%20Moove%20Sponsorship.md) |
 
-- **Chat and search checks:** [Mode Checks](evidence/cards/Mode%20Checks.md). Covers capability questions with no
+- **Chat and search checks:** [Mode Checks](evidence/cards/Mode%20Checks.md), plus a **live chat typed by me** ([screenshot](evidence/screenshots/chat-live-user.png)), which exposed a retrieval miss that I then fixed (Mode Checks §5). Covers capability questions with no
   lookup, a draft followed by "make that shorter" using the conversation, search with no generated answer, and a
   claim made only in chat that is not used by ask.
 - **Improvement history (failures kept):** [retrieval v1 → v3](evidence/retrieval/) and
