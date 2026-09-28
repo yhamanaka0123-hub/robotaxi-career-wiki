@@ -219,6 +219,7 @@ Note: I first tried to open it through `\\wsl.localhost\Ubuntu\…`. Obsidian ca
 | [obsidian-index.png](evidence/screenshots/obsidian-index.png) | `index.md` landing page grouped by topic, with short descriptions |
 | [obsidian-note-top.png](evidence/screenshots/obsidian-note-top.png), [obsidian-note-bottom.png](evidence/screenshots/obsidian-note-bottom.png) | `wiki/Career/My Career Plan`: matching heading, source properties, key facts with source links, related notes with reasons, Sources |
 | [obsidian-raw-source.png](evidence/screenshots/obsidian-raw-source.png) | After clicking the source link: the original `raw/My Career Notes` |
+| [obsidian-source-catalog.png](evidence/screenshots/obsidian-source-catalog.png) | Source Catalog: source ID → original raw file → wiki note → Wikipedia revision link, license |
 | [obsidian-graph.png](evidence/screenshots/obsidian-graph.png) | Graph view, **filter `path:wiki/`, Attachments off**: 6 readable labels; My Career Plan links to all topics; Waymo–Zoox–Robotaxi Industry; H-1B Visa–OPT |
 | [obsidian-graph-all.png](evidence/screenshots/obsidian-graph-all.png) | Unfiltered: notes, index, Source Catalog, and raw originals |
 
